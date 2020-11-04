@@ -4,6 +4,12 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/samanbadakhshan/.oh-my-zsh"
 
+export PATH="$PATH:~/dev/flutter/flutter/bin"
+export PATH="/usr/local/opt/arm-gcc-bin@8/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -108,11 +114,13 @@ alias ohmyzsh="atom ~/.oh-my-zsh"
 alias fdl='sudo launchctl limit maxfiles 1000000 1000000'
 alias nicegrep='grep -r --color'
 alias editbash='sudo nano ~/.bash_profile'
-alias dev='cd ~/dev/Benji'
+alias benji='cd ~/dev/Benji'
+alias dev='cd ~/dev/SkyGoV3'
 alias webdev='cd ~/dev/WebDev/PersonalSite'
 alias city='cd ~/dev/CityStacker'
 alias flushdns='dscacheutil -flushcache'
 alias reloadzsh='source ~/.zshrc'
+alias skyvpn='openconnect-sky.sh'
 
 ## Git ##
 alias gcp='git cherry-pick'
@@ -138,7 +146,15 @@ alias gsiu='git submodule update --init --recursive'
 alias gld='git log --pretty=oneline'
 
 function deleteAllBranches() { git branch | grep "$@" | xargs git branch -d -f; }
+function changes() { git log $@ --oneline --merges }
+function changesGR06() { git log origin/v3/develop..origin/v3/GR06 --oneline --merges }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="/usr/local/sbin:$PATH"
+
+jdk() {
+        version=$1
+        export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+        java -version
+ }
